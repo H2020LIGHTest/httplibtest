@@ -23,7 +23,7 @@
             </activation>
             <properties>
                 <!-- Override only if necessary -->
-                <buildNumber>${env.JAVA_VERSION}</buildNumber>
+                <JAVA_VERSION>${env.JAVA_VERSION}</JAVA_VERSION>
             </properties>
         </profile>
     </profiles>
