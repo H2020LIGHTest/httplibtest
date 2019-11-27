@@ -20,6 +20,7 @@ class SimpleHttpClientTest {
         printDebug();
         
         defaultKeystoreType = Security.getProperty("keystore.type");
+        // because: http://openjdk.java.net/jeps/229
         
         IAIK.addAsProvider(true);
     }
