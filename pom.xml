@@ -8,14 +8,34 @@
     <artifactId>http-lib-test</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <!-- Sane default -->
+        <JAVA_VERSION>11</JAVA_VERSION>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <property>
+                    <name>env.JAVA_VERSION</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- Override only if necessary -->
+                <buildNumber>${env.JAVA_VERSION}</buildNumber>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${JAVA_VERSION}</source>
+                    <target>${JAVA_VERSION}</target>
                 </configuration>
             </plugin>
         </plugins>
