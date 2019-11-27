@@ -23,6 +23,7 @@ jobs:
       - name: Set gitlabToken envvar
         env: # Set the secret as an input
           gitlabToken: ${{ secrets.gitlabToken }}
+        run: echo "loaded gitlab token from secrets"
 
       - name: Checkout repo
         uses: actions/checkout@v1
