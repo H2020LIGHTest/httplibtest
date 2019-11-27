@@ -6,26 +6,58 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.security.Security;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SimpleHttpClientTest {
     
-    private SimpleHttpClient client;
+    private static String defaultKeystoreType;
     
     @BeforeAll
     static void init() {
+        printDebug();
+        
+        defaultKeystoreType = Security.getProperty("keystore.type");
+        
         IAIK.addAsProvider(true);
+    }
+    
+    static void printDebug() {
+        String version = System.getProperty("java.version", "NOT SET!");
+        System.out.println("Java Version:   " + version);
+
+//        String trustStore = System.getProperty("javax.net.ssl.trustStore", "NOT SET!");
+//        String trustStoreType = System.getProperty("javax.net.ssl.trustStoreType", "NOT SET!");
+//        System.out.println("trustStore:     " + trustStore);
+//        System.out.println("trustStoreType: " + trustStoreType);
+        
+        String keystoreType = Security.getProperty("keystore.type");
+        System.out.println("keystore.type:  " + keystoreType);
     }
     
     @BeforeEach
     void setUp() {
-        client = new SimpleHttpClient();
+    
     }
     
     @Test
-    void get() throws IOException {
+    void getViaDefault() throws IOException {
+        Security.setProperty("keystore.type", defaultKeystoreType);
+        
+        SimpleHttpClient client = new SimpleHttpClient();
+        String resp = client.get("https://www.iaik.tugraz.at");
+        
+        assertNotNull(resp);
+        assertTrue(resp.contains("Institute of Applied Information Processing and Communications"));
+    }
+    
+    @Test
+    void getViaJKS() throws IOException {
+        Security.setProperty("keystore.type", "jks");
+        
+        SimpleHttpClient client = new SimpleHttpClient();
         String resp = client.get("https://www.iaik.tugraz.at");
         
         assertNotNull(resp);
