@@ -25,6 +25,12 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
+      - name: Display type of Java keystore
+        run: file /etc/ssl/certs/java/cacerts
+
+      - name: Display installed JVMs
+        run: ls -l /usr/lib/jvm
+
       - name: Build with Maven
         env:
           JAVA_VERSION: ${{ matrix.java }}
