@@ -15,16 +15,6 @@ jobs:
     name: Java ${{ matrix.java }}
 
     steps:
-      - name: Set Java version envvar
-        env:
-          JAVA_VERSION: ${{ matrix.java }}
-        run: echo "$JAVA_VERSION"
-
-      - name: Set gitlabToken envvar
-        env: # Set the secret as an input
-          gitlabToken: ${{ secrets.gitlabToken }}
-        run: echo "loaded gitlab token from secrets"
-
       - name: Checkout repo
         uses: actions/checkout@v1
 
@@ -34,7 +24,12 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build with Maven
+        env:
+          JAVA_VERSION: ${{ matrix.java }}
+          gitlabToken: ${{ secrets.gitlabToken }}
         run: mvn --file pom.xml --settings settings.xml compile
 
       - name: Test with Maven
+        env:
+          JAVA_VERSION: ${{ matrix.java }}
         run: mvn --file pom.xml test
