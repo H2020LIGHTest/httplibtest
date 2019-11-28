@@ -72,7 +72,7 @@
         <dependency>
             <groupId>iaik</groupId>
             <artifactId>iaik_jce_full_signed</artifactId>
-            <version>5.52</version>
+            <version>5.60</version>
         </dependency>
     </dependencies>
 
